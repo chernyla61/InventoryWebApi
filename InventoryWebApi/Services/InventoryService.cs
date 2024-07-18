@@ -1,6 +1,10 @@
-﻿using InventoryWebApi.DataAccess;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using InventoryWebApi.DTO;
 using InventoryWebApi.Models;
+using InventoryWebApi.DataAccess;
 
 namespace InventoryWebApi.Services
 {
@@ -13,35 +17,59 @@ namespace InventoryWebApi.Services
             _repository = repository;
         }
 
-        public Task<InventoryItem> CreateItem(CreateForm createForm)
+        public async Task<InventoryItem> CreateItem(CreateForm createForm)
         {
-            throw new NotImplementedException();
+            var newItem = new InventoryItem
+            {
+                Name = createForm.Name,
+                Category = createForm.Category,
+                Price = createForm.Price,
+                Discount = createForm.Discount,
+                Quantity = createForm.Quantity
+            };
+            return await _repository.AddInventoryItem(newItem);
         }
 
-        public Task DeleteItem(int barcode)
+        public async Task DeleteItem(int barcode)
         {
-            throw new NotImplementedException();
+            var item = (await _repository.GetInventory()).FirstOrDefault(i => i.Barcode == barcode);
+            if (item == null)
+            {
+                throw new KeyNotFoundException("Item not found");
+            }
+            await _repository.DeleteInventoryItem(item);
         }
 
-        public Task<List<InventoryItem>> GetItems()
+        public async Task<List<InventoryItem>> GetItems()
         {
-            throw new NotImplementedException();
+            return await _repository.GetInventory();
         }
 
-        public Task<List<InventoryItem>> GetItemsByQuery(ItemQueryModel queryParameters)
+        public async Task<List<InventoryItem>> GetItemsByQuery(ItemQueryModel queryParameters)
         {
-            throw new NotImplementedException();
+            return await _repository.GetInventoryItem(queryParameters);
         }
 
-        public Task<List<InventoryItem>> GetSortedItems()
+        public async Task<List<InventoryItem>> GetSortedItems()
         {
-            throw new NotImplementedException();
+            return await _repository.GetSorted();
         }
 
-        public Task UpdateItem(int barcode, CreateForm updateForm)
+        public async Task UpdateItem(int barcode, CreateForm updateForm)
         {
-            throw new NotImplementedException();
+            var existingItem = (await _repository.GetInventory()).FirstOrDefault(i => i.Barcode == barcode);
+            if (existingItem == null)
+            {
+                throw new KeyNotFoundException("Item not found");
+            }
+
+            existingItem.Name = updateForm.Name;
+            existingItem.Category = updateForm.Category;
+            existingItem.Price = updateForm.Price;
+            existingItem.Discount = updateForm.Discount;
+            existingItem.Quantity = updateForm.Quantity;
+
+            await _repository.UpdateInventoryItem(existingItem);
         }
     }
-
 }
