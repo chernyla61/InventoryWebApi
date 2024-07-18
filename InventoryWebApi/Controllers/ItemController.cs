@@ -55,7 +55,7 @@ namespace InventoryWebApi.Controllers
         }
 
         [HttpGet("query")]
-        public async Task<IActionResult> GetItemsByQuery([FromQuery] string category, [FromQuery] int? barcode, [FromQuery] string name, [FromQuery] double? discount)
+        public async Task<IActionResult> GetItemsByQuery([FromQuery] string category = null, [FromQuery] int? barcode = null, [FromQuery] string name = null, [FromQuery] double? discount = null)
         {
             var queryModel = new ItemQueryModel
             {
