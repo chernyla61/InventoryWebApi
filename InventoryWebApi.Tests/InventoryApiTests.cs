@@ -29,7 +29,7 @@ namespace InventoryWebApi.Tests
             SetUpClient();
         }
 
-        public async Task SeedData()
+        private async Task SeedData()
         {
 
             // Create entry with barcode 1 
