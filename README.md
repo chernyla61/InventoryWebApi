@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+# InventoryWebApi
+C% .NET Core API with EF Core
+=======
 ## Environment:  
 - .NET version: 6.0
 
@@ -43,3 +47,4 @@ The following APIs need to be implemented:
 7. Get an item by barcode - GET request to endpoint inventory/item/query?barcode={barcode} should return the details of the item with this barcode. The HTTP response code should be 200.  If no item exist return with this barcode, return an empty array.
 8. Get all items greater than a particular discount value - GET request to endpoint inventory/item/query?discount={discount} should return all the items having discount greater than this value. The HTTP response code should be 200. If no such item is found, return an empty array.
 9. Get an item by name -  GET request to endpoint inventory/item/query?name={name} should return the details of the relevant item. The HTTP response code should be 200. If no such item is found, return an empty array.
+>>>>>>> b34a2f5a0eb95dea10733cb14115ff557749380c
